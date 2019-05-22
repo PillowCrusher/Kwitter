@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: javax.persistence:javax.persistence-api:unknown">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/javax/persistence/javax.persistence-api/unknown/javax.persistence-api-unknown.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/javax/persistence/javax.persistence-api/unknown/javax.persistence-api-unknown-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/javax/persistence/javax.persistence-api/unknown/javax.persistence-api-unknown-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

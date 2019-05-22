@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui">
+<h:head>
+    <title><ui:insert name="title">Admin Panel</ui:insert></title>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+    <h:outputStylesheet library="css" name="adminpanel.css"/>
+</h:head>
+<h:body>
+    <h1 style="text-align: center" >Admin panel - Users</h1>
+    <h:form id="userForm">
+        <h:dataTable id="userTable" value="#{adminPanelBean.getUsersList()}"  var="user">
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                <h:outputText value="#{user.account.userEmail}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Username</f:facet>
+                <h:outputText value="#{user.name}"/>
+            </h:column>
+                <h:column>
+                    <f:facet name="header">Profile Picture</f:facet>
+                    <h:outputText value="#{user.profilePicture}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Profile Details</f:facet>
+                    <h:outputText value="#{user.profileDetails}" />
+                </h:column>
+            <h:column>
+                <f:facet name="header">Role</f:facet>
+                <h:outputText value="#{user.account.role}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">Update</f:facet>
+                <h:commandButton value="Update" action="#{adminPanelBean.editAction(user)}" update="@form">
+                    <f:param name="edit" value="#{user}"/>
+                </h:commandButton>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Delete</f:facet>
+                <b:commandButton value="Delete" action="#{adminPanelBean.deleteuser(user)}"  onclick="return confirm('Are you sure?')" update="userTable" />
+            </h:column>
+        </h:dataTable>
+        <br />
+        <br />
+        <br />
+        <h:commandButton value="Create new user" action="#{adminPanelBean.createUser()}"/>
+    </h:form>
+</h:body>
+</html>

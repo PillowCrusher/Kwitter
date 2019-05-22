@@ -1,0 +1,10 @@
+.centerDiv {
+    position: relative;
+    top:20%;
+    left: 40%;
+    margin: auto;
+}
+
+body {
+    background-image: url("/Resources/images/71499dc09f451cccaac54a3172d49f5e.jpg");
+}

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_4_0.xsd"
+          version="2.5">
+<display-name>Kwitter</display-name>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    
+    <filter>
+        <filter-name>CorsFilter</filter-name>
+        <filter-class>Controller.CorsFilter</filter-class>
+    </filter>
+<filter-mapping>
+    <filter-name>CorsFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+
+    <!-- Roles -->
+      <security-role>
+           <description>Administrators</description>
+           <role-name>admin</role-name>
+      </security-role>
+      <security-role>
+           <description>User</description>
+           <role-name>user</role-name>
+      </security-role>
+    <security-role>
+        <description>Moderator</description>
+        <role-name>moderator</role-name>
+    </security-role>
+
+    <!-- Resource / Role Mapping -->
+      <security-constraint>
+           <display-name>Admin Area</display-name>
+           <web-resource-collection>
+                <web-resource-name>admin_resources</web-resource-name>
+                <url-pattern>/admin/*</url-pattern>
+                <http-method>GET</http-method>
+                <http-method>POST</http-method>
+           </web-resource-collection>
+           <auth-constraint>
+                <description>For admin role only</description>
+                <role-name>admin</role-name>
+           </auth-constraint>
+           <user-data-constraint>
+                <transport-guarantee>NONE</transport-guarantee>
+           </user-data-constraint>
+      </security-constraint>
+    <!-- Login Prompt -->
+     <login-config>
+         <auth-method>FORM</auth-method>
+         <realm-name>jaasProject</realm-name>
+           <form-login-config>
+                <form-login-page>/login.xhtml</form-login-page>
+                <form-error-page>/login_fail.xhtml</form-error-page>
+           </form-login-config>
+      </login-config>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+        <url-pattern>/auth/*</url-pattern>
+        <url-pattern>/admin/*</url-pattern>
+        <url-pattern>/faces/*</url-pattern>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>login.xhtml</welcome-file>
+    </welcome-file-list>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>glass-x</param-value>
+    </context-param>
+</web-app>
+
