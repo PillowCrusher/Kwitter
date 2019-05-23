@@ -29,7 +29,7 @@ class UserDaoImplTest {
 
     @BeforeEach
     void setUp() {
-         EntityManagerFactory entityManager = Persistence.createEntityManagerFactory("kwetterTestPU");
+         EntityManagerFactory entityManager = Persistence.createEntityManagerFactory("kwetterTestsPU");
          em = entityManager.createEntityManager();
          em.getTransaction().begin();
 
