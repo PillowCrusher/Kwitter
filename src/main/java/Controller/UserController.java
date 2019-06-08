@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Auth.Secured;
 import Entity.User;
 import Service.PostService;
 import Service.UserService;
@@ -42,12 +43,13 @@ public class UserController {
         }
         return user;
     }
-
+    @Secured
     @GET
     public Response get() {
         return Response.ok(userService.findAll()).build();
     }
 
+    @Secured
     @GET
     @Path("/id/post")
     public Response getPostsByUserId(@QueryParam("id") String id) {
@@ -58,8 +60,7 @@ public class UserController {
        return Response.ok(postService.findByUser(user.getId())).build();
     }
 
-
-
+    @Secured
     @GET
     @Path("/id")
     public Response getById(@QueryParam("id") String id) {
@@ -70,6 +71,7 @@ public class UserController {
         return Response.ok(user).build();
     }
 
+    @Secured
     @GET
     @Path("/username")
     public Response searchByUsername(@QueryParam("username") String username) {
@@ -77,6 +79,7 @@ public class UserController {
         return Response.ok(users).build();
     }
 
+    @Secured
     @GET
     @Path("/email")
     public Response getUserByEmail(@QueryParam("email") String email) {
@@ -87,6 +90,7 @@ public class UserController {
         return Response.ok(user).build();
     }
 
+    @Secured
     @GET
     @Path("/follows")
     public Response getFollows(@QueryParam("id") String id){
@@ -97,7 +101,7 @@ public class UserController {
         return Response.ok(userService.getFollows(user)).build();
     }
 
-
+    @Secured
     @GET
     @Path("/followers")
     public Response getFollowing(@QueryParam("id") String id){
@@ -123,7 +127,9 @@ public class UserController {
         return Response.status(Response.Status.NOT_ACCEPTABLE).build();
     }
 
+    @Secured
     @PUT
+    @Path("/addFollow")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addFollow(String json){
         ObjectMapper objectMapper = new ObjectMapper();
@@ -143,7 +149,31 @@ public class UserController {
         return Response.ok(userService.addFollow(users[0],users[1])).build();
     }
 
+    @SuppressWarnings("Duplicates")
+    @Secured
+    @PUT
+    @Path("/removeFollow")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response removeFollow(String json){
+        ObjectMapper objectMapper = new ObjectMapper();
+        User[] users = null;
+        try{
+            users = objectMapper.readValue(json,User[].class);
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(users==null||users.length!=2){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        return Response.ok(userService.removeFollow(users[0],users[1])).build();
+    }
 
+
+    @Secured
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response update(String json) {
@@ -163,9 +193,10 @@ public class UserController {
         existingUser.setProfileDetails(newUser.getProfileDetails());
         existingUser.setName(newUser.getName());
         userService.update(existingUser);
-        return Response.ok().build();
+        return Response.ok(getById(existingUser.getId())).build();
     }
 
+    @Secured
     @DELETE
     @Path("/{id}")
     public void delete(@PathParam("id") String id){

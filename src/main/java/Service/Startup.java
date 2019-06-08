@@ -20,7 +20,7 @@ public class Startup {
     @PostConstruct
     public void init(){
         Account account = new Account("jeroen@peters.nl","wachtw","admin");
-        Account account1 = new Account("jeroen1@peters.nl","wachtw");
+        Account account1 = new Account("jeroen1@peters.nl" ,"wachtw");
 
         User user = new User("Henk","assets/danger_birb.png","Een hele toffe kerel!",account);
         User user2 = new User("Jan","assets/danger_birb.png","Een hele toffe kerel!",account1);

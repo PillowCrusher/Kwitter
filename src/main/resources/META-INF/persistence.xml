@@ -18,22 +18,4 @@
             <property name="hibernate.show_sql" value="true" />
         </properties>
     </persistence-unit>
-     <persistence-unit name="kwetterTestsPU" transaction-type="RESOURCE_LOCAL">
-            <provider>org.hibernate.ejb.HibernatePersistence</provider>
-            <class>Entity.Account</class>
-            <class>Entity.User</class>
-            <class>Entity.Post</class>
-            <properties>
-                <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/testKwetter" />
-                <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-
-                <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-                <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
-                <property name="hibernate.hbm2ddl.auto" value="create-drop" />
-                <property name="hibernate.show_sql" value="true" />
-                <property name="hibernate.connection.username" value="newuser" />
-                <property name="hibernate.connection.password" value="root" />
-
-            </properties>
-        </persistence-unit>
 </persistence>

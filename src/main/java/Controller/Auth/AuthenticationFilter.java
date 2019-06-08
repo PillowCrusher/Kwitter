@@ -21,10 +21,20 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) throws IOException {
         // Get the HTTP Authorization header from the request
         String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-
+        if(authorizationHeader == null){
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+            return;
+        }
+        if(authorizationHeader.equals(""))
+        {
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+            return;
+        }
         // Extract the token from the HTTP Authorization header
         String token = authorizationHeader.substring("Bearer".length()).trim();
-
+        if(token.equals("")){
+            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+        }
         try {
 
             // Validate the token

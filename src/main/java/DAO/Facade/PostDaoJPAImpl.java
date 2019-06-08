@@ -65,6 +65,7 @@ public class PostDaoJPAImpl implements IPostDao {
     }
 
     public Post create(Post entity) {
+        entityManager.merge(entity.getUser());
         entity.setId(getId());
         entityManager.persist(entity);
         return entity;

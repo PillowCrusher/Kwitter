@@ -35,6 +35,7 @@ public class PostService  implements Serializable {
             return null;
         }
         User user = userDao.findById(post.getUser().getId());
+        post.setUser(user);
         if(user!=null) {
             post = postDao.create(post);
             return post;

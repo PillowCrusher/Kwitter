@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Auth.Secured;
 import Entity.Post;
 import Entity.User;
 import Service.PostService;
@@ -29,6 +30,7 @@ public class PostController {
     @Inject
     private PostService postService;
 
+    @Secured
     @GET
     public Response getAllPosts(){
        List<Post> posts = postService.findAll();
@@ -36,6 +38,7 @@ public class PostController {
         return Response.ok(posts).build();
     }
 
+    @Secured
     @GET
     @Path("/{id}")
     public Response getSingularPostById(@PathParam("id") String id) {
@@ -46,6 +49,7 @@ public class PostController {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
+    @Secured
     @GET
     @Path("/message")
     public Response searchByPost(@QueryParam("message") String message){
@@ -53,7 +57,7 @@ public class PostController {
         return Response.ok(posts).build();
     }
 
-
+    @Secured
     @GET
     @Path("/user")
     public Response getPostsFromUser(@QueryParam("id") String id) {
@@ -64,7 +68,7 @@ public class PostController {
         return Response.ok(postService.findByUser(user.getId())).build();
     }
 
-
+    @Secured
     @GET
     @Path("/for")
     public Response getPostsForUser(@QueryParam("id") String id){
@@ -72,11 +76,10 @@ public class PostController {
         if (user == null) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-        return null;
+        return Response.ok(postService.findForUser(user)).build();
     }
 
-
-
+    @Secured
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createPost(String json) {
@@ -96,6 +99,7 @@ public class PostController {
         return Response.ok(createdPost).build();
     }
 
+    @Secured
     @DELETE
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)

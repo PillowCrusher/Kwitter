@@ -21,11 +21,6 @@ public class AdminPanelBean implements Serializable {
 
     private User toEdit;
 
-    private String userEmail;
-    private String name;
-    private String profilePic;
-    private String profileDetails;
-    private String role;
 
     private List<Post> postsList;
     private List<User> userList;
@@ -53,76 +48,76 @@ public class AdminPanelBean implements Serializable {
         return "";
     }
 
-    public String saveAction(){
-        System.out.println("wtf?");
-        toEdit.getAccount().setRole(role);
-        toEdit.getAccount().setUserEmail(userEmail);
-        toEdit.setName(name);
-        toEdit.setProfileDetails(profileDetails);
-        toEdit.setProfilePicture(profilePic);
-        userService.update(toEdit);
-        for (User userL : userList){
-            if(userL.getId().equals(toEdit.getId())){
-                userL = toEdit;
-            }
-        }
-        return "save";
-    }
-    public String editAction(User user){
-        for (User userL : userList){
-            if(userL.getId().equals(user.getId())){
-                toEdit = userL;
-                break;
-            }
-        }
-        if(toEdit!=null){
-            userEmail = toEdit.getAccount().getUserEmail();
-            name = toEdit.getName();
-            profilePic = toEdit.getProfilePicture();
-            profileDetails = toEdit.getProfileDetails();
-            role = toEdit.getAccount().getRole();
-            return "edit";
-        }
-        return null;
-    }
-    public void setProfileDetails(String profileDetails) {
-        this.profileDetails = profileDetails;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getProfilePic() {
-        return profilePic;
-    }
-
-    public void setProfilePic(String profilePic) {
-        this.profilePic = profilePic;
-    }
-
-    public String getProfileDetails() {
-        return profileDetails;
-    }
+//    public String saveAction(){
+//        System.out.println("wtf?");
+//        toEdit.getAccount().setRole(role);
+//        toEdit.getAccount().setUserEmail(userEmail);
+//        toEdit.setName(name);
+//        toEdit.setProfileDetails(profileDetails);
+//        toEdit.setProfilePicture(profilePic);
+//        userService.update(toEdit);
+//        for (User userL : userList){
+//            if(userL.getId().equals(toEdit.getId())){
+//                userL = toEdit;
+//            }
+//        }
+//        return "save";
+//    }
+//    public String editAction(User user){
+//        for (User userL : userList){
+//            if(userL.getId().equals(user.getId())){
+//                toEdit = userL;
+//                break;
+//            }
+//        }
+//        if(toEdit!=null){
+//            userEmail = toEdit.getAccount().getUserEmail();
+//            name = toEdit.getName();
+//            profilePic = toEdit.getProfilePicture();
+//            profileDetails = toEdit.getProfileDetails();
+//            role = toEdit.getAccount().getRole();
+//            return "edit";
+//        }
+//        return null;
+//    }
+//    public void setProfileDetails(String profileDetails) {
+//        this.profileDetails = profileDetails;
+//    }
+//
+//    public String getRole() {
+//        return role;
+//    }
+//
+//    public void setRole(String role) {
+//        this.role = role;
+//    }
+//
+//    public String getUserEmail() {
+//        return userEmail;
+//    }
+//
+//    public void setUserEmail(String userEmail) {
+//        this.userEmail = userEmail;
+//    }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public String getProfilePic() {
+//        return profilePic;
+//    }
+//
+//    public void setProfilePic(String profilePic) {
+//        this.profilePic = profilePic;
+//    }
+//
+//    public String getProfileDetails() {
+//        return profileDetails;
+//    }
 
 }

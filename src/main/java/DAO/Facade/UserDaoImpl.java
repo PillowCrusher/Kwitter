@@ -35,15 +35,14 @@ public class UserDaoImpl implements IUserDao {
     }
 
     public User findById(String id) {
-        try{
+        try {
             return (User) entityManager.createNamedQuery("User.findById")
                     .setParameter("id", id)
                     .getSingleResult();
-        }
-        catch (NoResultException e){
+        } catch (NoResultException e) {
             return null;
         }
-        }
+    }
 
     public User findByEmail(String email) {
         try {

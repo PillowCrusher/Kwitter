@@ -34,7 +34,7 @@ class PostDaoJPAImplTest {
 
     @BeforeEach
     void setUp() {
-        EntityManagerFactory entityManager = Persistence.createEntityManagerFactory("kwetterTestPU");
+        EntityManagerFactory entityManager = Persistence.createEntityManagerFactory("kwetterTestsPU");
         em = entityManager.createEntityManager();
         em.getTransaction().begin();
 
@@ -133,6 +133,8 @@ class PostDaoJPAImplTest {
     void delete() {
         //Arrange
         createPosts();
+
+        List<Post> a = postDoa.findAll();
 
         List<Post> posts = new ArrayList<>();
         posts.add(post);

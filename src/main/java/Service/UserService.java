@@ -79,6 +79,31 @@ public class UserService implements Serializable {
             return null;
         }
     }
+
+
+    public User removeFollow(User follower, User toFollow){
+        boolean alreadyFollowing = false;
+        User reference = toFollow;
+        if(findById(follower.getId())==null||findById(toFollow.getId())==null)
+        {
+            return null;
+        }
+        List<User> followers = getFollows(follower);
+        for(User inFollowers: followers){
+            if(inFollowers.getId().equals(toFollow.getId())){
+               alreadyFollowing = true;
+               reference = inFollowers;
+
+               break;
+            }
+        }
+        if(!alreadyFollowing){
+            return null;
+        }
+        follower.getFollowedUsers().remove(reference);
+        return userDao.update(follower);
+    }
+
     public User addFollow(User follower, User toFollow){
         if(findById(follower.getId())==null||findById(toFollow.getId())==null)
         {

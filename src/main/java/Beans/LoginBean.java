@@ -20,7 +20,7 @@ import java.util.logging.Level;
 @Named
 public class LoginBean implements Serializable {
     @Inject
-    private UserService userService = new UserService();
+    private UserService userService;
 
     private String username;
     private String password;
@@ -49,8 +49,12 @@ public class LoginBean implements Serializable {
         if (request.isUserInRole("admin")){
             return "adminpanel";
         }
+        if (request.isUserInRole("moderator")){
+            return "moderator";
+        }
         if (request.isUserInRole("user")){
             return "userpanel";
+
         }
         return "";
     }
