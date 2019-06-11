@@ -43,4 +43,18 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/moderator/moderatorPanel.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>edit</from-outcome>
+            <to-view-id>/moderator/editPost.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/moderator/editPost.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>save</from-outcome>
+            <to-view-id>/moderator/moderatorPanel.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

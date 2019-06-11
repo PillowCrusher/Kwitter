@@ -48,6 +48,9 @@ public class PostService  implements Serializable {
             postDao.delete(post);
         }
     }
+    public void update(Post post) {
+
+    }
     public List<Post> findByUser(String id){
         User user = userDao.findById(id);
         if(user!=null){

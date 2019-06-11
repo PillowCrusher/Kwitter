@@ -82,6 +82,11 @@ public class PostDaoJPAImpl implements IPostDao {
         entityManager.remove(entity);
     }
 
+    @Override
+    public void update(Post entity) {
+        entityManager.merge(entity);
+    }
+
     public void deleteById(String id) {
         Post post = findById(id);
         delete(post);

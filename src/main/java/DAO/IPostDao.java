@@ -14,5 +14,6 @@ public interface IPostDao {
 
     Post create(Post entity);
     void delete(Post entity);
+    void update(Post entity);
     void deleteById(String id);
 }

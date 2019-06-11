@@ -90,11 +90,13 @@ public class AdminPanelBean implements Serializable {
     }
 
     public String save() {
+        List<Role> roleList = new ArrayList<>();
         for (String role : selectedRoles){
             Role createdRole = new Role(role,userEmail);
-            userService.addRole(createdRole);
+            roleList.add(createdRole);
         }
         List<Role> addedRoles = userService.getRoles(userEmail);
+        userService.setRoles(roleList,userEmail);
         toEdit.getAccount().setRoles(addedRoles);
         toEdit.getAccount().setUserEmail(userEmail);
         toEdit.setName(name);

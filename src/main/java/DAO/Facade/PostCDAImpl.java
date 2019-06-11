@@ -91,6 +91,11 @@ public class PostCDAImpl implements IPostDao {
         }
     }
 
+    @Override
+    public void update(Post entity) {
+
+    }
+
     public void deleteById(String id) {
         Post toDelete= null;
         for(Post post : posts) {

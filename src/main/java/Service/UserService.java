@@ -15,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("Duplicates")
 @Stateless
 public class UserService implements Serializable {
     @Inject
@@ -177,11 +178,49 @@ public class UserService implements Serializable {
         userDao.update(user);
     }
 
-    public void setRoles(List<Role> roles, String email){
+    public void setRoles(List<Role> roles, String email) {
+        List<Role> toDelete = new ArrayList<>();
+        List<Role> toAdd = new ArrayList<>();
+        boolean alreadyAdded = false;
         List<Role> existingRoles = userDao.getRoles(email);
-        for(Role role : existingRoles) {
-            if()
+        for (Role role : existingRoles) {
+            for (Role role1 : roles) {
+                if (role.getRolename().equals(role1.getRolename())) {
+                    alreadyAdded = true;
+                    break;
+                }
+            }
+            if (!alreadyAdded) {
+                toDelete.add(role);
+                alreadyAdded = false;
+            }
         }
+        alreadyAdded = false;
+        for (Role role1 : roles) {
+            for (Role role : existingRoles) {
+                if (role.getRolename().equals(role1.getRolename())) {
+                    alreadyAdded = true;
+                    break;
+                }
+            }
+            if (!alreadyAdded) {
+                toAdd.add(role1);
+                alreadyAdded = false;
+            }
+        }
+
+        for(Role toDeleteRole : toDelete) {
+            existingRoles.remove(toDeleteRole);
+            userDao.removeRole(toDeleteRole);
+        }
+
+        for(Role toAddRole : toAdd) {
+            existingRoles.add(toAddRole);
+            userDao.createRole(toAddRole);
+        }
+        User user = userDao.findByEmail(email);
+        user.getAccount().setRoles(existingRoles);
+        userDao.update(user);
     }
 
     public List<Role> getRoles(String email) {

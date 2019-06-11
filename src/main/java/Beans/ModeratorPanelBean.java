@@ -29,5 +29,10 @@ public class ModeratorPanelBean implements Serializable {
         this.toEdit = post;
         return "edit";
     }
+
+    public String savePost(Post post) {
+        postService.update(post);
+        return "save";
+    }
 }
 
