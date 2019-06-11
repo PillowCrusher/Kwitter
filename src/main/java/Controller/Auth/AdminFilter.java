@@ -1,5 +1,8 @@
 package Controller.Auth;
 
+
+import Entity.Role;
+import Entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -14,11 +17,11 @@ import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 
 @SuppressWarnings("Duplicates")
-@Secured
+@AdminSecured
 @Provider
 @Priority(Priorities.AUTHENTICATION)
-public class AuthenticationFilter implements ContainerRequestFilter {
-   private static final String SECRET_KEY = "BakeMonogatari";
+public class AdminFilter implements ContainerRequestFilter {
+    private static final String SECRET_KEY = "BakeMonogatari";
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
@@ -42,8 +45,20 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
             // Validate the token
             Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
-          Claims claims =  Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+            Claims claims =  Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
             ObjectMapper deserializer = new ObjectMapper();
+            User user = deserializer.readValue(claims.getSubject(), User.class);
+            boolean allowed = false;
+            for (Role role : user.getAccount().getRoles()){
+                if(role.getRolename().equals("admin")){
+                    allowed = true;
+                    break;
+                }
+            }
+
+            if(!allowed){
+                requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+            }
 
             System.out.println("#### valid token : " + token);
 

@@ -2,6 +2,7 @@ package DOA;
 
 import DAO.Facade.UserDaoImpl;
 import Entity.Account;
+import Entity.Role;
 import Entity.User;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
@@ -15,6 +16,7 @@ import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("Duplicates")
 class UserDaoImplTest {
 
     private EntityManager em;
@@ -33,9 +35,24 @@ class UserDaoImplTest {
          em = entityManager.createEntityManager();
          em.getTransaction().begin();
 
-         account = new Account("Jeroen1@peters.nl","wachtw");
-         account1 = new Account("Jeroen2@peters.nl","wachtw");
-         account2 = new Account("Jeroen3@peters.nl","wachtw");
+         userDao = new UserDaoImpl();
+
+        Role userRole = new Role("user");
+        Role adminRole = new Role("admin");
+        Role moderatorRole = new Role("moderator");
+
+        userDao.setEntityManager(em);
+
+        userDao.createRole(userRole);
+        userDao.createRole(adminRole);
+        userDao.createRole(moderatorRole);
+
+        List<Role> roles = new ArrayList<>();
+        roles.add(userRole);
+
+         account = new Account("Jeroen1@peters.nl","wachtw",roles);
+         account1 = new Account("Jeroen2@peters.nl","wachtw",roles);
+         account2 = new Account("Jeroen3@peters.nl","wachtw",roles);
 
          user = new User("Jeroen","birb","Maker van dit project yo",account);
         user1 = new User("Henk","birb","Maker van dit project yo",account1);

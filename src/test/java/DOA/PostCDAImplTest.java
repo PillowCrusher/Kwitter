@@ -4,6 +4,7 @@ import DAO.Facade.PostCDAImpl;
 import DAO.Facade.UserCDAImpl;
 import Entity.Account;
 import Entity.Post;
+import Entity.Role;
 import Entity.User;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,11 +18,15 @@ class PostCDAImplTest {
     private PostCDAImpl postCDA = new PostCDAImpl();
     private UserCDAImpl userCDA = new UserCDAImpl();
     private User user;
-
+    private List<Role> roles;
     @BeforeEach
     public void setup()
     {
-        user = new User("Jason","","",new Account("jason@json.nl","Gaston"));
+        Role userRole = new Role("user");
+        userCDA.createRole(userRole);
+        roles = new ArrayList<>();
+        roles.add(userRole);
+        user = new User("Jason","","",new Account("jason@json.nl","Gaston",roles));
         user = userCDA.create(user);
     }
 
@@ -54,9 +59,9 @@ class PostCDAImplTest {
 
     @Test
     void findByUser() {
-        User user2 = new User("Jan","","",new Account("jan@jansen.nl","testpass"));
+        User user2 = new User("Jan","","",new Account("jan@jansen.nl","testpass",roles));
         user2 = userCDA.create(user2);
-        User user3 = new User("Jaap","","",new Account("jaap@jaap.nl","testasdfd"));
+        User user3 = new User("Jaap","","",new Account("jaap@jaap.nl","testasdfd",roles));
         user3 = userCDA.create(user3);
 
         Post post1 = new Post("testpost1",user);
@@ -78,9 +83,9 @@ class PostCDAImplTest {
 
     @Test
     void findForUser() {
-        User user2 = new User("Jan","","",new Account("jan@jansen.nl","testpass"));
+        User user2 = new User("Jan","","",new Account("jan@jansen.nl","testpass",roles));
         user2 = userCDA.create(user2);
-        User user3 = new User("Jaap","","",new Account("jaap@jaap.nl","testasdfd"));
+        User user3 = new User("Jaap","","",new Account("jaap@jaap.nl","testasdfd",roles));
         user3 = userCDA.create(user3);
 
         Post post1 = new Post("testpost1",user);
@@ -103,7 +108,7 @@ class PostCDAImplTest {
     @Test
     void findAll() {
         Assert.assertEquals(0,postCDA.findAll().size());
-        User user2 = new User("Jan","","",new Account("jan@jansen.nl","testpass"));
+        User user2 = new User("Jan","","",new Account("jan@jansen.nl","testpass",roles));
         user2 = userCDA.create(user2);
 
         Post post1 = new Post("testpost1",user);

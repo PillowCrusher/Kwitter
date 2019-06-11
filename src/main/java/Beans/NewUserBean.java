@@ -1,6 +1,7 @@
 package Beans;
 
 import Entity.Account;
+import Entity.Role;
 import Entity.User;
 import Service.UserService;
 
@@ -8,6 +9,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.List;
 
 @SessionScoped
 @Named
@@ -20,13 +22,13 @@ public class NewUserBean implements Serializable {
     private String name;
     private String profilePic = "C:\\Users\\jeroe\\Downloads\\btmja1nlv8q21.png";
     private String profileDetails;
-    private String role;
+    private List<Role> role;
 
     public String saveNewUser(){
         Account account = new Account();
         account.setUserEmail(userEmail);
         account.setPass(pass);
-        account.setRole(role);
+        account.setRoles(role);
         User user = new User();
         user.setAccount(account);
         user.setName(name);
@@ -76,11 +78,11 @@ public class NewUserBean implements Serializable {
         this.profileDetails = profileDetails;
     }
 
-    public String getRole() {
+    public List<Role> getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(List<Role> role) {
         this.role = role;
     }
 }

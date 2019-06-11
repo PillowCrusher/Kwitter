@@ -3,13 +3,16 @@ package Service;
 import DAO.IUserDao;
 import DAO.JPA;
 import Entity.Account;
+import Entity.Role;
 import Entity.User;
 import Util.Auth;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.io.File;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -148,5 +151,40 @@ public class UserService implements Serializable {
     }
     public List<User> findAll(){
         return userDao.findAll();
+    }
+
+    public List<String> getPictures() {
+        File folder = new File("C:\\Users\\Jeroen\\IdeaProjects\\Kwitter\\web\\resources\\images");
+        File[] listOfFiles = folder.listFiles();
+        List<String> links = new ArrayList<>();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            links.add("assets/"+listOfFiles[i].getName());
+        }
+       return links;
+    }
+
+    public void addRole(Role role) {
+        User user = userDao.findByEmail(role.getEmail());
+        for(Role exsistingRole : user.getAccount().getRoles()) {
+            if(exsistingRole.getRolename().equals(role.getRolename())){
+                return;
+            }
+        }
+        userDao.createRole(role);
+        List<Role> currentRoles = userDao.getRoles(user.getAccount().getUserEmail());
+        user.getAccount().setRoles(currentRoles);
+        userDao.update(user);
+    }
+
+    public void setRoles(List<Role> roles, String email){
+        List<Role> existingRoles = userDao.getRoles(email);
+        for(Role role : existingRoles) {
+            if()
+        }
+    }
+
+    public List<Role> getRoles(String email) {
+        return userDao.getRoles(email);
     }
 }

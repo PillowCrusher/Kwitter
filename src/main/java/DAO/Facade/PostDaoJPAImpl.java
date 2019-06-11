@@ -78,6 +78,7 @@ public class PostDaoJPAImpl implements IPostDao {
                 post.setResponseTo(null);
             }
         }
+        entityManager.merge(entity);
         entityManager.remove(entity);
     }
 

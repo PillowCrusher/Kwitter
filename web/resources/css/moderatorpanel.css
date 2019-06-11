@@ -12,10 +12,3 @@ th {
     background-color: #4CAF50;
     color: white;
 }
-.grid td {
-    display: block;
-    float: left;
-    white-space: nowrap;
-    width: 33.3333333333%;
-    box-sizing: border-box;
-}

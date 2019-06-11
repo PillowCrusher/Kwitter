@@ -4,6 +4,7 @@ import DAO.IPostDao;
 import DAO.IUserDao;
 import Entity.Account;
 import Entity.Post;
+import Entity.Role;
 import Entity.User;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,10 +40,11 @@ class PostServiceTest {
     @BeforeEach
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        account = new Account("jeroen@jeroen.jeroen","wachtw","user");
+        List<Role> roles = new ArrayList<>();
+        account = new Account("jeroen@jeroen.jeroen","wachtw",roles);
         user = new User("Jan","assets/danger_birb.png","Test test test",account);
 
-        account2 = new Account("jeroen2@jeroen.jeroen","wachtw","user");
+        account2 = new Account("jeroen2@jeroen.jeroen","wachtw",roles);
         user2 = new User("Henk","assets/danger_birb.png","Test test test",account2);
 
         post = new Post("Hallo daar!",user);

@@ -1,6 +1,7 @@
 package DAO;
 
 import Entity.Account;
+import Entity.Role;
 import Entity.User;
 
 import java.util.List;
@@ -31,4 +32,10 @@ public interface IUserDao {
     List<User> getFollowing(User user);
 
     List<User> getFollowedBy(User user);
+
+    void createRole(Role role);
+
+    List<Role> getRoles(String email);
+
+    void removeRole(Role role);
 }

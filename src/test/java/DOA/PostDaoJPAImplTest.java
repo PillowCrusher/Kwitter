@@ -4,6 +4,7 @@ import DAO.Facade.PostDaoJPAImpl;
 import DAO.Facade.UserDaoImpl;
 import Entity.Account;
 import Entity.Post;
+import Entity.Role;
 import Entity.User;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
@@ -16,6 +17,7 @@ import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("Duplicates")
 class PostDaoJPAImplTest {
 
     private UserDaoImpl userDao;
@@ -44,9 +46,17 @@ class PostDaoJPAImplTest {
         postDoa = new PostDaoJPAImpl();
         postDoa.setEntityManager(em);
 
-        account = new Account("Jeroen1@peters.nl","wachtw");
-        account1 = new Account("Jeroen2@peters.nl","wachtw");
-        account2 = new Account("Jeroen3@peters.nl","wachtw");
+        Role userRole = new Role("user");
+        Role adminRole = new Role("admin");
+        Role moderatorRole = new Role("moderator");
+
+        userDao.createRole(userRole);
+        userDao.createRole(adminRole);
+        userDao.createRole(moderatorRole);
+
+        account = new Account("Jeroen1@peters.nl","wachtw",userRole);
+        account1 = new Account("Jeroen2@peters.nl","wachtw",userRole);
+        account2 = new Account("Jeroen3@peters.nl","wachtw",userRole);
 
         user = new User("Jeroen","birb","Maker van dit project yo",account);
         user1 = new User("Henk","birb","Maker van dit project yo",account1);
@@ -80,8 +90,7 @@ class PostDaoJPAImplTest {
         createPosts();
 
         List<Post> posts = new ArrayList<>();
-        posts.add(post);
-        posts.add(post1);
+        posts.add(post2);
         //Act
         List<Post> returnPost = postDoa.findByMessage("Hoe");
         //Assert
@@ -121,7 +130,8 @@ class PostDaoJPAImplTest {
     @Test
     void create() {
         //Arrange
-        String id = post.getId();
+        post = new Post("Hallo!",user);
+        String id = "";
         //Act
        Post returnPost = postDoa.create(post);
         //Assert
@@ -137,9 +147,10 @@ class PostDaoJPAImplTest {
         List<Post> a = postDoa.findAll();
 
         List<Post> posts = new ArrayList<>();
-        posts.add(post);
         posts.add(post2);
         posts.add(post3);
+
+        List<Post> aabasdf = postDoa.findAll();
         //Act
         postDoa.delete(post1);
         //Assert

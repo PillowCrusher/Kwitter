@@ -2,6 +2,7 @@ package DAO.Facade;
 
 import DAO.IUserDao;
 import Entity.Account;
+import Entity.Role;
 import Entity.User;
 
 import javax.ejb.Stateful;
@@ -162,5 +163,20 @@ public class UserCDAImpl implements IUserDao {
             }
         }
        return followedBy;
+    }
+
+    @Override
+    public void createRole(Role role) {
+
+    }
+
+    @Override
+    public List<Role> getRoles(String email) {
+        return null;
+    }
+
+    @Override
+    public void removeRole(Role role) {
+
     }
 }

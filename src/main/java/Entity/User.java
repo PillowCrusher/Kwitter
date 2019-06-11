@@ -57,7 +57,7 @@ public class User implements Serializable {
     private String profilePicture;
     @Size(max = 150)
     private String profileDetails;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnore
     private List<User> followedUsers = new ArrayList<>();
     @OneToOne

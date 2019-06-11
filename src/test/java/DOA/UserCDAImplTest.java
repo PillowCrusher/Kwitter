@@ -1,12 +1,12 @@
 package DOA;
 
-import org.junit.Test;
 import DAO.Facade.UserCDAImpl;
 import Entity.Account;
+import Entity.Role;
 import Entity.User;
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +16,11 @@ class UserCDAImplTest {
     private UserCDAImpl userCDA = new UserCDAImpl();
 
     private Account account;
-
+    private List<Role> roles;
     @BeforeEach
     void setUp() {
-        account = new Account("test@test.nl","testpassword");
+        roles= new ArrayList<>();
+        account = new Account("test@test.nl","testpassword",roles);
     }
 
     @Test
@@ -45,7 +46,7 @@ class UserCDAImplTest {
     @Test
     void findAll() {
         Assert.assertEquals(0,userCDA.findAll().size());
-        Account account1 = new Account("test2@test.nl","testpassword");
+        Account account1 = new Account("test2@test.nl","testpassword",roles);
 
         List foundUsers = new ArrayList<>();
         foundUsers.add(userCDA.create(new User("Jan","birb","Geweldig persoon ofzo",account)));

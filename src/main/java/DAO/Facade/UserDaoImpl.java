@@ -1,15 +1,16 @@
     package DAO.Facade;
 
-import DAO.IUserDao;
+    import DAO.IUserDao;
 import DAO.JPA;
 import Entity.Account;
+import Entity.Role;
 import Entity.User;
 
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
+    import javax.persistence.PersistenceContext;
+    import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ public class UserDaoImpl implements IUserDao {
 
 
     @PersistenceContext(unitName = "kwetterPU")
+    //@PersistenceContext(unitName = "kwetterTestsPU")
     private EntityManager entityManager;
 
     public UserDaoImpl() {
@@ -158,5 +160,20 @@ public class UserDaoImpl implements IUserDao {
             }
         }
         return followedByUsers;
+    }
+
+    public void createRole(Role role) {
+        entityManager.persist(role);
+    }
+
+    public List<Role> getRoles(String email) {
+        return  entityManager.createNamedQuery("kwetterRole.getRole")
+                .setParameter("email",email)
+                .getResultList();
+    }
+
+    @Override
+    public void removeRole(Role role) {
+        entityManager.remove(role);
     }
 }

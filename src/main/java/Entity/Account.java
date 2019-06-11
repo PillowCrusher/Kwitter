@@ -5,6 +5,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "kwetterAccount")
@@ -26,22 +28,22 @@ public class Account implements Serializable {
     @Size(min = 3,message = "Password should be between 3 and 12 characters")
     @NotNull
     private String pass;
-    @Size(max=10)
+    @ManyToMany(fetch = FetchType.EAGER)
     @NotNull
-    private String role;
+    private List<Role> roles = new ArrayList<>();
     @Transient
     private String token;
 
 
-    public Account(String userEmail, String pass) {
+    public Account(String userEmail, String pass,Role role) {
         this.userEmail = userEmail;
         this.pass = pass;
-        role = "user";
+        roles.add(role);
     }
-    public Account(String userEmail, String pass,String role) {
+    public Account(String userEmail, String pass,List<Role> roles) {
         this.userEmail = userEmail;
         this.pass = pass;
-        this.role = role;
+        this.roles = roles;
     }
     public Account() {
     }
@@ -62,12 +64,12 @@ public class Account implements Serializable {
         this.pass = pass;
     }
 
-    public String getRole() {
-        return role;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(List<Role> role) {
+        this.roles = role;
     }
 
     public String getToken() {

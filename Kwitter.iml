@@ -131,5 +131,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: info.cukes:gherkin:2.11.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: info.cukes:cucumber-html:0.2.1" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.13" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.faces:jsf-api:2.2.18" level="project" />
   </component>
 </module>

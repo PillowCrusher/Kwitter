@@ -2,13 +2,16 @@ package Service;
 
 import Entity.Account;
 import Entity.Post;
+import Entity.Role;
 import Entity.User;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
+import java.util.List;
 
 
+@SuppressWarnings("Duplicates")
 @Singleton
 @javax.ejb.Startup
 public class Startup {
@@ -19,8 +22,19 @@ public class Startup {
 
     @PostConstruct
     public void init(){
-        Account account = new Account("jeroen@peters.nl","wachtw","admin");
-        Account account1 = new Account("jeroen1@peters.nl" ,"wachtw");
+        Role userRole = new Role("user","janpeter@peters.nl");
+        Role adminRole = new Role("admin","jeroen1@peters.nl");
+        Role moderatorRole = new Role("moderator","jeroen1@peters.nl");
+
+        userService.addRole(userRole);
+        userService.addRole(adminRole);
+        userService.addRole(moderatorRole);
+
+        List<Role> saved1 = userService.getRoles("janpeter@peters.nl");
+        List<Role> saved2 = userService.getRoles("jeroen1@peters.nl");
+
+        Account account = new Account("janpeter@peters.nl","wachtw",saved1);
+        Account account1 = new Account("jeroen1@peters.nl" ,"wachtw",saved2);
 
         User user = new User("Henk","assets/danger_birb.png","Een hele toffe kerel!",account);
         User user2 = new User("Jan","assets/danger_birb.png","Een hele toffe kerel!",account1);
@@ -30,7 +44,7 @@ public class Startup {
 
 
         //TODO test following with wrong email
-        userService.addFollow(userService.findByEmail("jeroen@peters.nl"),userService.findByEmail("jeroen1@peters.nl"));
+        userService.addFollow(userService.findByEmail("janpeter@peters.nl"),userService.findByEmail("jeroen1@peters.nl"));
 
         Post post = new Post("Hallo daar!",user);
         Post post1 = new Post("Generaal kenobi!",user);

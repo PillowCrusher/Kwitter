@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title><ui:insert name="title">Admin Panel</ui:insert></title>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+    <h:outputStylesheet library="css" name="moderatorpanel.css"/>
+</h:head>
+<h:body>
+    <h1 style="text-align: center">Moderator panel - Posts</h1>
+    <h:form id="postForm">
+        <h:dataTable id="postTable" value="#{moderatorPanelBean.getPostList()}" var="post">
+            <h:column>
+                <f:facet name="header">User</f:facet>
+                <h:outputText value="#{post.user.name}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Message</f:facet>
+                <h:outputText value="#{post.message}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Response To</f:facet>
+                <h:outputText value="#{post.reponseTo.message}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Edit</f:facet>
+                <h:commandButton value="Edit" action="#{moderatorPanelBean.editPost(post)}" update="@form">
+                    <f:param name="edit" value="#{post}"/>
+                </h:commandButton>
+            </h:column>
+        </h:dataTable>
+    </h:form>
+</h:body>
+</html>

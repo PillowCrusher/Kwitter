@@ -2,6 +2,7 @@ package Service;
 
 import DAO.Facade.UserCDAImpl;
 import Entity.Account;
+import Entity.Role;
 import Entity.User;
 import Util.Auth;
 import org.junit.Assert;
@@ -27,11 +28,13 @@ class UserServiceTest {
 
     private Account account;
     private User user;
+    private List<Role> roles;
 
     @BeforeEach
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-        account = new Account("jeroen@jeroen.jeroen","wachtw","user");
+        roles = new ArrayList<>();
+        account = new Account("jeroen@jeroen.jeroen","wachtw",roles);
         user = new User("Jan","assets/danger_birb.png","Test test test",account);
     }
 
@@ -307,7 +310,7 @@ class UserServiceTest {
      */
     @Test
     void getFollowing(){
-        Account acc1 = new Account("test@test.test","testtest");
+        Account acc1 = new Account("test@test.test","testtest",roles);
         User user2 = new User("test","","",acc1);
 
         userService.addFollow(user,user2);
@@ -331,7 +334,7 @@ class UserServiceTest {
      */
     @Test
     void getFollowing1(){
-        Account acc1 = new Account("test@test.test","testtest");
+        Account acc1 = new Account("test@test.test","testtest",roles);
         User user2 = new User("test","","",acc1);
 
         userService.addFollow(user,user2);
@@ -353,7 +356,7 @@ class UserServiceTest {
      */
     @Test
     void getFollowers(){
-        Account acc1 = new Account("test@test.test","testtest");
+        Account acc1 = new Account("test@test.test","testtest",roles);
         User user2 = new User("test","","",acc1);
 
         userService.addFollow(user2,user);
@@ -375,7 +378,7 @@ class UserServiceTest {
      */
     @Test
     void getFollowers1(){
-        Account acc1 = new Account("test@test.test","testtest");
+        Account acc1 = new Account("test@test.test","testtest",roles);
         User user2 = new User("test","","",acc1);
 
         userService.addFollow(user2,user);
@@ -390,5 +393,13 @@ class UserServiceTest {
 
         verify(userDao,atLeastOnce()).findById(user.getId());
         verify(userDao,never()).getFollowedBy(user);
+    }
+
+    @Test
+    void getPictures() {
+        List<String>  a = userService.getPictures();
+        for(String b : a ){
+            System.out.println(b);
+        }
     }
 }

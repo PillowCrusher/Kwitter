@@ -10,6 +10,7 @@
         <class>Entity.Account</class>
         <class>Entity.User</class>
         <class>Entity.Post</class>
+        <class>Entity.Role</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/testKwetter" />
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
